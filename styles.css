@@ -1,0 +1,338 @@
+/* ========== CSS VARIABLES ========== */
+/* These are like variables - define colors once, use everywhere */
+/* If you want to change a color, just change it here */
+:root {
+  --f1-red: #e10600;        /* Official F1 red */
+  --f1-green: #00d800;      /* Go light green */
+  --f1-dark: #0a0a0a;       /* Almost black background */
+  --f1-gray: #1a1a1a;       /* Slightly lighter dark for cards */
+  --f1-white: #f0f0f0;      /* Off white for text */
+  --f1-yellow: #ffd700;     /* Gold for highlights */
+}
+
+/* ========== RESET & BASE ========== */
+/* Removes default browser spacing and sets box-sizing so padding doesn't break layouts */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Sets the base font and background for the whole page */
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--f1-dark);
+  color: var(--f1-white);
+  min-height: 100vh;        /* Makes the page fill the full screen height */
+  overflow-x: hidden;       /* Stops horizontal scroll from appearing */
+}
+
+/* ========== NAVBAR ========== */
+/* The top navigation bar */
+.navbar {
+  display: flex;                        /* Puts items in a row */
+  justify-content: space-between;      /* Pushes logo left, buttons right */
+  align-items: center;                  /* Centers them vertically */
+  padding: 16px 32px;
+  background-color: var(--f1-gray);
+  border-bottom: 3px solid var(--f1-red); /* Red underline like F1 branding */
+  position: sticky;                     /* Stays at the top when you scroll */
+  top: 0;
+  z-index: 100;                         /* Keeps it on top of everything else */
+}
+
+/* The REACTION ZONE logo text on the left */
+.nav-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--f1-red);
+  letter-spacing: 2px;
+}
+
+/* Container for the nav buttons on the right */
+.nav-links {
+  display: flex;
+  gap: 12px;                            /* Space between buttons */
+}
+
+/* The RACE and PIT LANE STATS buttons */
+.nav-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--f1-white);
+  border: 2px solid var(--f1-white);
+  cursor: pointer;                      /* Shows a hand cursor on hover */
+  transition: all 0.2s ease;           /* Smooth animation when hovered */
+  text-transform: uppercase;
+}
+
+/* What the nav button looks like when you hover over it */
+.nav-btn:hover {
+  background: var(--f1-red);
+  border-color: var(--f1-red);
+  color: white;
+}
+
+/* The active nav button (the current page) */
+.nav-btn.active {
+  background: var(--f1-red);
+  border-color: var(--f1-red);
+}
+
+/* ========== SECTIONS ========== */
+/* Both sections share this style */
+.section {
+  min-height: calc(100vh - 65px);      /* Full height minus navbar */
+  display: flex;
+  flex-direction: column;               /* Stacks children vertically */
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* .hidden makes something invisible - JavaScript adds/removes this class */
+.hidden {
+  display: none;
+}
+
+/* .active means the section is currently showing */
+.section.active {
+  display: flex;
+}
+
+/* ========== GAME BOX ========== */
+/* The big clickable area in the center */
+#game-box {
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  background-color: var(--f1-red);     /* Starts red like F1 red lights */
+  border: 4px solid #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;                  /* Needed so children can be positioned inside */
+  overflow: hidden;                    /* Hides anything that goes outside the box */
+  transition: background-color 0.1s;  /* Fast color switch when lights go green */
+  user-select: none;                   /* Stops text from being highlighted on click */
+}
+
+/* ========== F1 LIGHTS ========== */
+/* The row of 5 lights at the top of the game box */
+.lights-container {
+  display: flex;
+  gap: 16px;
+  position: absolute;                  /* Floats above the center text */
+  top: 30px;
+}
+
+/* Each individual light circle */
+.light {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;                  /* Makes it a circle */
+  background-color: #333;             /* Off/dark by default */
+  border: 3px solid #555;
+  transition: all 0.3s ease;
+}
+
+/* When a light is turned on - JavaScript adds this class */
+.light.on {
+  background-color: var(--f1-red);
+  border-color: var(--f1-red);
+  box-shadow: 0 0 20px var(--f1-red), 0 0 40px var(--f1-red); /* Glowing effect */
+}
+
+/* ========== GAME MESSAGE ========== */
+/* The text in the middle of the game box */
+.game-message {
+  text-align: center;
+  z-index: 1;                          /* Sits above the checkered strip */
+}
+
+/* The big status text like "LIGHTS OUT" or "GO!" */
+#status-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: white;
+  letter-spacing: 6px;
+  text-shadow: 0 0 20px rgba(255,255,255,0.5); /* Subtle glow on text */
+}
+
+/* The smaller instruction text below */
+#sub-text {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);    /* Slightly transparent white */
+  margin-top: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ========== CHECKERED STRIP ========== */
+/* The checkered flag strip at the bottom of the game box */
+.checkered-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  /* This creates a checkered pattern using CSS gradients */
+  background-image:
+    linear-gradient(45deg, #000 25%, transparent 25%),
+    linear-gradient(-45deg, #000 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #000 75%),
+    linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-size: 20px 20px;          /* Size of each square */
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  background-color: white;
+}
+
+/* ========== START BUTTON ========== */
+/* The big START RACE button below the game box */
+#start-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  padding: 16px 48px;
+  margin-top: 24px;
+  background-color: var(--f1-red);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+/* Hover effect - gets bigger and brighter */
+#start-btn:hover {
+  background-color: #ff0a00;
+  transform: scale(1.05);              /* Slightly enlarges the button */
+  box-shadow: 0 0 20px rgba(225, 6, 0, 0.6);
+}
+
+/* ========== RESULT BOX ========== */
+/* The box that shows your reaction time after clicking */
+.result-box {
+  margin-top: 20px;
+  padding: 16px 40px;
+  border: 2px solid var(--f1-yellow);
+  background-color: var(--f1-gray);
+  text-align: center;
+}
+
+/* The text inside the result box */
+#result-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  color: var(--f1-yellow);
+  letter-spacing: 2px;
+}
+
+/* ========== STATS SECTION ========== */
+/* The container for the stats page */
+.stats-container {
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+}
+
+/* The PIT LANE STATS heading */
+.stats-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--f1-white);
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+
+/* The subtitle below it */
+.stats-subtitle {
+  color: rgba(255,255,255,0.5);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* The checkered divider line between title and cards */
+.checkered-divider {
+  width: 100%;
+  height: 12px;
+  margin-bottom: 40px;
+  /* Same checkered pattern as the strip */
+  background-image:
+    linear-gradient(45deg, #fff 25%, transparent 25%),
+    linear-gradient(-45deg, #fff 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #fff 75%),
+    linear-gradient(-45deg, transparent 75%, #fff 75%);
+  background-size: 12px 12px;
+  background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+  background-color: #333;
+}
+
+/* The grid that holds the two stat cards side by side */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;     /* Two equal columns */
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+/* Each individual stat card */
+.stat-card {
+  background-color: var(--f1-gray);
+  border: 2px solid #333;
+  border-top: 4px solid var(--f1-red); /* Red top border like F1 styling */
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* The emoji icon at the top of each card */
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
+
+/* The label like "BEST LAP TIME" */
+.stat-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+/* The big number value */
+.stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--f1-yellow);
+}
+
+/* The "milliseconds" or "attempts" text below the number */
+.stat-unit {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ========== GREEN STATE ========== */
+/* When the game box turns green, the lights container hides */
+#game-box.go .lights-container {
+  opacity: 0;                          /* Makes lights invisible without removing them */
+}

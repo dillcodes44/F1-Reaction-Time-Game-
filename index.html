@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Tells the browser this is an HTML5 document -->
+  <!-- UTF-8 means it can handle all characters and symbols -->
+  <meta charset="UTF-8" />
+
+  <!-- Makes the site fit properly on phones and tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- The title that shows up on the browser tab -->
+  <title>REACTION ZONE 🏎️</title>
+
+  <!-- Links our CSS file so the page knows where to find the styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Google Font: Orbitron looks futuristic and race-like -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- ========== NAVIGATION BAR ========== -->
+  <!-- This is the top bar with links to switch between sections -->
+  <nav class="navbar">
+    <div class="nav-logo">🏎️ REACTION ZONE</div>
+    <div class="nav-links">
+      <!-- These buttons switch between the two sections of the site -->
+      <button onclick="showSection('game')" class="nav-btn active" id="nav-game">RACE</button>
+      <button onclick="showSection('stats')" class="nav-btn" id="nav-stats">PIT LANE STATS</button>
+    </div>
+  </nav>
+
+  <!-- ========== GAME SECTION ========== -->
+  <!-- This is the main game area - starts visible -->
+  <section id="game-section" class="section active">
+
+    <!-- The big clickable area that changes color -->
+    <!-- onclick calls the handleClick function in script.js when clicked -->
+    <div id="game-box" onclick="handleClick()">
+
+      <!-- The F1 start lights - 5 red circles like the real thing -->
+      <div class="lights-container" id="lights-container">
+        <div class="light" id="light-1"></div>
+        <div class="light" id="light-2"></div>
+        <div class="light" id="light-3"></div>
+        <div class="light" id="light-4"></div>
+        <div class="light" id="light-5"></div>
+      </div>
+
+      <!-- The message shown in the middle of the screen -->
+      <!-- This text changes depending on the game state -->
+      <div class="game-message" id="game-message">
+        <h1 id="status-text">LIGHTS OUT</h1>
+        <p id="sub-text">Click the button below to start</p>
+      </div>
+
+      <!-- Checkered flag strip at the bottom of the game box -->
+      <div class="checkered-strip"></div>
+
+    </div>
+
+    <!-- The start button below the game box -->
+    <button id="start-btn" onclick="startGame()">🏁 START RACE</button>
+
+    <!-- Shows the result after the player clicks -->
+    <!-- Hidden at first, shown by JavaScript after each round -->
+    <div id="result-box" class="result-box hidden">
+      <p id="result-text"></p>
+    </div>
+
+  </section>
+
+  <!-- ========== STATS SECTION ========== -->
+  <!-- This section is hidden at first, shown when user clicks "PIT LANE STATS" -->
+  <section id="stats-section" class="section hidden">
+
+    <div class="stats-container">
+      <h2 class="stats-title">🏆 PIT LANE STATS</h2>
+      <p class="stats-subtitle">Your personal lap record board</p>
+
+      <!-- Checkered divider line -->
+      <div class="checkered-divider"></div>
+
+      <!-- The two stat cards -->
+      <div class="stats-grid">
+
+        <!-- Best score card -->
+        <div class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-label">BEST LAP TIME</div>
+          <!-- This gets updated by JavaScript when a new best is set -->
+          <div class="stat-value" id="best-score">--</div>
+          <div class="stat-unit">milliseconds</div>
+        </div>
+
+        <!-- Number of tries card -->
+        <div class="stat-card">
+          <div class="stat-icon">🔁</div>
+          <div class="stat-label">TOTAL RACES</div>
+          <!-- This gets updated by JavaScript every time the player plays -->
+          <div class="stat-value" id="total-tries">0</div>
+          <div class="stat-unit">attempts</div>
+        </div>
+
+      </div>
+
+      <!-- Button to go back to the game -->
+      <button class="nav-btn" onclick="showSection('game')">🏎️ BACK TO RACE</button>
+
+    </div>
+
+  </section>
+
+  <!-- Links our JavaScript file - always at the bottom so HTML loads first -->
+  <script src="script.js"></script>
+
+</body>
+</html>
